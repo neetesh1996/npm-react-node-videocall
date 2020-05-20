@@ -64,6 +64,7 @@ class App extends Component {
     // triggered when a stream is added to pc, see below - this.pc.addStream(stream)
     this.pc.onaddstream = (e) => {
       this.remoteVideoref.current.srcObject = e.stream;
+      console.log("stream" + e.stream);
     };
 
     // called when getUserMedia() successfully returns - see below
@@ -112,7 +113,7 @@ class App extends Component {
 
     // initiates the creation of SDP
     this.pc.createOffer({ offerToReceiveVideo: 1 }).then((sdp) => {
-      // console.log(JSON.stringify(sdp))
+      console.log("offer" + JSON.stringify(sdp));
 
       // set offer sdp as local description
       this.pc.setLocalDescription(sdp);
@@ -125,7 +126,7 @@ class App extends Component {
   createAnswer = () => {
     console.log("Answer");
     this.pc.createAnswer({ offerToReceiveVideo: 1 }).then((sdp) => {
-      // console.log(JSON.stringify(sdp))
+      console.log("anssdp" + JSON.stringify(sdp));
 
       // set answer sdp as local description
       this.pc.setLocalDescription(sdp);
@@ -137,7 +138,7 @@ class App extends Component {
   setRemoteDescription = () => {
     // retrieve and parse the SDP copied from the remote peer
     const desc = JSON.parse(this.textref.value);
-
+    console.log("text" + desc);
     // set sdp as remote description
     this.pc.setRemoteDescription(new RTCSessionDescription(desc));
   };
@@ -151,15 +152,11 @@ class App extends Component {
     // this.pc.addIceCandidate(new RTCIceCandidate(candidate))
 
     this.candidates.forEach((candidate) => {
-      console.log(JSON.stringify(candidate));
+      console.log("ice" + JSON.stringify(candidate));
       this.pc.addIceCandidate(new RTCIceCandidate(candidate));
     });
   };
-  // onClose = () => {
-  //   window.opener = null;
-  //   window.open("", "_self");
-  //   window.close();
-  // };
+
   render() {
     return (
       <div>
