@@ -14,7 +14,7 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-    this.socket = io("https://server-test-webrtc.herokuapp.com/", {
+    this.socket = io("https://brave-curie-67195.netlify.app", {
       path: "/webrtc",
       query: {},
     });
